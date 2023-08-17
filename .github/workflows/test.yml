@@ -15,15 +15,9 @@ jobs:
       with:
         python-version: 3.x
         
-    - name: Install pandas
+    - name: Install dependencies
       run: pip install pandas
       
-    - name: Time pandas import  
+    - name: Run timing script
       run: |
-        import time
-        start_time = time.time()
-        
-        import pandas
-        
-        end_time = time.time()
-        print("Pandas import took %d seconds" % (end_time - start_time))
+        python main.py
