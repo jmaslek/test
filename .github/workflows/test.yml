@@ -1,0 +1,26 @@
+name: Time Pandas Import
+on: 
+  workflow_dispatch:
+
+jobs:
+  time_pandas:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest, macos-latest, macos-latest-arm64]
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with: 
+          python-version: 3.x
+
+      - name: Install pandas
+        run: pip install pandas
+        
+      - name: Time pandas import
+        run: |
+          start_time="$(date +%s)"
+          python -c "import pandas"
+          end_time="$(date +%s)"        
+          echo "Pandas import took $((end_time - start_time)) seconds"
