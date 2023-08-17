@@ -1,23 +1,32 @@
-name: Time Pandas Import 
+name: Time Python Script
 on:
   workflow_dispatch:
 
 jobs:
-  time_pandas:
+  time_script:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [windows-latest, macos-latest, macos-latest-arm64]
+        os: [ubuntu-latest, windows-latest, macos-latest, macos-latest-arm64]
 
     steps:
     - uses: actions/checkout@v2
-    - uses: actions/setup-python@v2
+    
+    - name: Setup Python
+      uses: actions/setup-python@v2
       with:
         python-version: 3.x
         
+    - name: Cache dependencies  
+      uses: actions/cache@v2
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+            
     - name: Install dependencies
-      run: pip install pandas
+      run: pip install -r requirements.txt
       
     - name: Run timing script
-      run: |
-        python main.py
+      run: python main.py
