@@ -1,5 +1,5 @@
-name: Time Pandas Import
-on: 
+name: Time Pandas Import 
+on:
   workflow_dispatch:
 
 jobs:
@@ -10,17 +10,20 @@ jobs:
         os: [windows-latest, macos-latest, macos-latest-arm64]
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
-        with: 
-          python-version: 3.x
-
-      - name: Install pandas
-        run: pip install pandas
+    - uses: actions/checkout@v2
+    - uses: actions/setup-python@v2
+      with:
+        python-version: 3.x
         
-      - name: Time pandas import
-        run: |
-          start_time="$(date +%s)"
-          python -c "import pandas"
-          end_time="$(date +%s)"        
-          echo "Pandas import took $((end_time - start_time)) seconds"
+    - name: Install pandas
+      run: pip install pandas
+      
+    - name: Time pandas import  
+      run: |
+        import time
+        start_time = time.time()
+        
+        import pandas
+        
+        end_time = time.time()
+        print("Pandas import took %d seconds" % (end_time - start_time))
