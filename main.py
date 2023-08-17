@@ -1,4 +1,8 @@
 import time
+import platform
+
+print(platform.platform())
+
 start_time = time.time()
 
 import pandas 
